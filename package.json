@@ -1,10 +1,10 @@
 {
-  "name": "todo-app-mern",
+  "name": "todo-mern-app",
   "version": "1.0.0",
   "description": "This is a simple todo application with user authentication that will store the todos in a database",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon ./backend/server.js"
+    "devServer": "nodemon ./backend/server.js"
   },
   "keywords": [
     "todo",
