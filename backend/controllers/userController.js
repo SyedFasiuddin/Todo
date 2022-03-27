@@ -2,6 +2,10 @@ const User = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
+const generateJwtToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' })
+}
+
 const registerUser = async (req, res) => {
     const { username, email, password } = req.body
     if (!username || !email || !password) {
@@ -25,7 +29,10 @@ const registerUser = async (req, res) => {
     })
     if (user) {
         res.status(201)
-        res.json({ _id: user._id })
+        res.json({
+            _id: user._id,
+            token: generateJwtToken(user._id)
+        })
     } else {
         res.status(400)
         throw new Error("Invalid user")
@@ -40,7 +47,10 @@ const authUser = async (req, res) => {
     }
     const user = await User.findOne({ email })
     if (user && (await bcrypt.compare(password, user.password))) {
-        res.json({ _id: user._id })
+        res.json({
+            _id: user._id,
+            token: generateJwtToken(user._id)
+        })
     } else {
         res.status(400)
         throw new Error("Invalid user")
@@ -48,7 +58,11 @@ const authUser = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
-    res.json({ message: "user display" })
+    const { _id, username, email } = await User.findById(req.user.id)
+
+    res.status(200).json({
+        id: _id, username, email
+    })
 }
 
 module.exports = {
