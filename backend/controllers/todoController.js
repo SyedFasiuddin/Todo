@@ -16,7 +16,8 @@ const setTodo = async (req, res) => {
         todo: req.body.todo,
         user: req.user.id
     })
-    res.status(200).json(todo)
+
+    res.status(200).json(todo.todo)
 }
 
 const updateTodo = async (req, res) => {

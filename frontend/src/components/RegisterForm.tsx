@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { FC, useState } from 'react';
 
 const RegisterForm: FC = () => {
@@ -9,12 +10,20 @@ const RegisterForm: FC = () => {
         checkPassword: ''
     })
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault()
 
-    // TODO: 
-    // 1 handle password validation
-    // 2 handle registration
+    if(formData.password !== formData.checkPassword){
+      console.log("Wrong password!")
+      return
+    }
+
+    const API_URI = "/api/user/register/"
+
+    const res = await axios.post(API_URI, formData)
+    if(res.data){
+      localStorage.setItem('token', res.data.token)
+    }
   }
 
   const onChange = (e: any) => {

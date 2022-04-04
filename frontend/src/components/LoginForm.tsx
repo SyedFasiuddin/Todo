@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { FC, useState } from 'react';
 
 const LoginForm: FC = () => {
@@ -5,13 +6,26 @@ const LoginForm: FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault()
 
     // TODO:
     // 1 handle login
     // 2 handle logged in state
     // 3 handle token
+
+    const API_URI: string = '/api/user/login/'  
+
+    const userData = {
+      email: email,
+      password: password,
+    }
+
+    const res = await axios.post(API_URI, userData)
+
+    if(res.data){
+      localStorage.setItem("token", res.data.token)
+    } 
 
     setEmail('')
     setPassword('')
@@ -41,7 +55,7 @@ const LoginForm: FC = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit">Login</button>
+          <button className='btn btn-block' type="submit">Login</button>
         </div>
       </form>
     </section>
