@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 const LoginForm: FC = () => {
 
@@ -19,6 +19,7 @@ const LoginForm: FC = () => {
   }
 
   const InsertAllTodos: FC = () => {
+
     return (
       <section className='content'>
         {allTodos.length > 0 ? (
@@ -56,6 +57,8 @@ const LoginForm: FC = () => {
 
     const res = await axios.post(API_URI, userData)
 
+    console.log(res)
+
     if (res.data) {
       localStorage.setItem("token", res.data.token)
     }
@@ -65,6 +68,10 @@ const LoginForm: FC = () => {
 
     getAllTodos()
   }
+
+  // useEffect(() => {
+  //   getAllTodos()
+  // }, [allTodos, setAllTodos])
 
   return (
     <>

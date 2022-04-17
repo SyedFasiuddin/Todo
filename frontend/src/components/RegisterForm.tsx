@@ -2,18 +2,18 @@ import axios from 'axios';
 import { FC, useState } from 'react';
 
 const RegisterForm: FC = () => {
-  
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        checkPassword: ''
-    })
+
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    checkPassword: ''
+  })
 
   const onSubmit = async (e: any) => {
     e.preventDefault()
 
-    if(formData.password !== formData.checkPassword){
+    if (formData.password !== formData.checkPassword) {
       console.log("Wrong password!")
       return
     }
@@ -21,16 +21,19 @@ const RegisterForm: FC = () => {
     const API_URI = "/api/user/register/"
 
     const res = await axios.post(API_URI, formData)
-    if(res.data){
+
+    console.log(res)
+
+    if (res.data) {
       localStorage.setItem('token', res.data.token)
     }
   }
 
   const onChange = (e: any) => {
-      setFormData(prevState => ({
-        ...prevState,  
-        [e.target.name]: e.target.value
-      }))
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
   }
 
   return (
@@ -81,7 +84,7 @@ const RegisterForm: FC = () => {
           />
         </div>
         <div className="form-group">
-          <button type="submit">Login</button>
+          <button className='btn btn-block' type="submit">Register</button>
         </div>
       </form>
     </section>

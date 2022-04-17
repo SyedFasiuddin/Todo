@@ -1,12 +1,16 @@
-import {FC} from 'react'
+import { FC } from 'react'
 
-const TodoItem: FC = ({todo}) => {
+interface Props {
+    todo: string,
+}
+
+const TodoItem: FC = () => {
     return (
         <div className="todo">
-            <h2>{todo}</h2>
+            <h2></h2>
             <button className='close'>X</button>
         </div>
     )
-} 
+}
 
 export default TodoItem
